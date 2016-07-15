@@ -4,41 +4,29 @@ myApp.controller('HomeController', ['$scope', '$http', 'Summoner', function($sco
   var playerID;
   
   $.getJSON('js/json/champions.json', function(champData){
-    $scope.champs = getJsonArray(champData.data);
+    //$scope.champs = getJsonArray(champData.data);
   }); 
   
-  $scope.getInfo = function(name) {
-    var address = pvpnet + '/api/lol/na/v1.4/summoner/by-name/' + name + key; 
-    
-    $http.get(address).then(function(response){
-      $scope.basicInfo = response.data[name];
+  $scope.getInfo = function(name){
+    Summoner.basicInfo(name).then(function(response){
+      $scope.basicInfo = response;
     });
   };
   
-  $scope.getRankedStats = function(id) {
-    var address = pvpnet + '/api/lol/na/v1.3/stats/by-summoner/' + id + '/ranked' + name + key; 
-    
-    $http.get(address).then(function(response){
-      $scope.rankedStats = response.data;
+  $scope.getRankedStats = function(id, name) {
+    Summoner.getRankedStats(id, name).then(function(response){
+      $scope.rankedStats = response;
     });
-    
   };
   
   $scope.championByID = function(id) {
-    var address = pvpnet + '/api/lol/static-data/na/v1.2/champion/' + id + key; 
-    $http.get(address).then(function(response){
-      $scope.champs = response.data;
-      return response.data;
+    Summoner.championByID(id).then(function(response){
+      $scope.champs = response;
     });
-    
-  }
+  };
   
   $scope.getInfo("supdood");
-  
-  $scope.$watch("basicInfo.id", function(){
-    $scope.getRankedStats($scope.basicInfo.id);
-  });
-  
-  //$scope.championByID(18);
+  $scope.getRankedStats(99, "supdood");
+  $scope.championByID("99");
   
 }]);
