@@ -1,0 +1,16 @@
+<div class="card home">
+ <h1> {{ champs }} </h1>
+ 
+  <h2>Summoner Info</h2>
+  <div class="player">
+    Summoner Name: {{basicInfo.name}} <br/>
+    Summoner Level: {{basicInfo.summonerLevel}}
+  </div>
+  {{ basicInfo }}
+  <br/><br/>
+  <div ng-repeat="(key, champion) in rankedStats.champions">
+    {{ champion }}
+  </div>
+  {{ rankedStats.champions[0] }}
+  <br/><br/>
+</div>
